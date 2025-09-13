@@ -70,7 +70,7 @@ export default function HomePage() {
                     </Text>
                   )}
                   {task.doneAt && (
-                    <Text size="xs" c="chanadda">
+                    <Text size="xs" c="krittin">
                       Done at: {dayjs(task.doneAt).format("ddd MMM DD YYYY ")}
                     </Text>
                   )}

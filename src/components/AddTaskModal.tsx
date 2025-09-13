@@ -66,6 +66,16 @@ export default function AddTaskModal({
     onAdd(title, description, dueDate, assignee);
     onClose();
     resetForm();
+    const newTask = {
+    title,
+    description,
+    dueDate,
+    assignee,
+  };
+  const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  storedTasks.push(newTask);
+  localStorage.setItem("tasks", JSON.stringify(storedTasks));
+
   };
 
   const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (
