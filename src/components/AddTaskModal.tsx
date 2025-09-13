@@ -119,7 +119,7 @@ export default function AddTaskModal({
       error={!assignee?.at(0)?  "Assignees is required" : false}
       onChange={(e) => setAssignee(e)}
       value={assignee ?? undefined}
-        > </MultiSelect>
+        /> 
         <Button onClick={handleAdd}>Save</Button>
       </Stack>
     </Modal>
