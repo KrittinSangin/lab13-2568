@@ -7,17 +7,26 @@ import {
   Table,
   ActionIcon,
   Checkbox,
+  Badge,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import dayjs from "dayjs";
 import AddTaskModal from "../components/AddTaskModal";
 import { useTaskStore } from "../store/TaskItemStore";
+// import type { TaskProps } from "../libs/Task";
 
 export default function TodoTablePage() {
   const { tasks, addTask, toggleTask, removeTask } = useTaskStore();
   const [modalOpened, setModalOpened] = useState(false);
-
+  // const [firstLoad, setFirstLoad] = useState(true);
+//   const [ ,setValue] = useLocalStorage({
+//     key: "task"
+// });
+  //readhere
+  // const setLocal = (task: TaskProps[]) => {
+  //   setValue(JSON.stringify(task))
+  // }
   const rows = tasks.map((task) => (
     <Table.Tr key={task.id}>
       <Table.Td w={450}>
@@ -36,13 +45,21 @@ export default function TodoTablePage() {
       <Table.Td>
         {task.dueDate ? dayjs(task.dueDate).format("ddd MMM DD YYYY") : "-"}
       </Table.Td>
-      <Table.Td>{task.doneAt}</Table.Td>
+      <Table.Td>{dayjs(task.doneAt).format("ddd MMM DD YYYY")}</Table.Td>
       <Table.Td>
         <ActionIcon color="red" onClick={() => removeTask(task.id)}>
           <IconTrash size={16} />
         </ActionIcon>
       </Table.Td>
       {/* เพิ่ม row assignees ตรงนี้*/}
+      <Table.Td w={500}>
+        <Stack>
+
+        {task.assignee?.map((as)=>(
+          <Badge  variant="light" color="blue"> {as} </Badge>
+        ))}
+        </Stack>
+      </Table.Td>
     </Table.Tr>
   ));
 
@@ -58,7 +75,10 @@ export default function TodoTablePage() {
         <AddTaskModal
           opened={modalOpened}
           onClose={() => setModalOpened(false)}
-          onAdd={addTask}
+          onAdd={
+          addTask
+          }
+          setLocal = {tasks}
         />
 
         <Table striped highlightOnHover horizontalSpacing="xl">
@@ -70,6 +90,7 @@ export default function TodoTablePage() {
               <Table.Th>Due Date</Table.Th>
               <Table.Th>Completed</Table.Th>
               <Table.Th>Actions</Table.Th>
+              <Table.Th>Assignees</Table.Th>
               {/* เพิ่ม table header assignees ตรงนี้*/}
             </Table.Tr>
           </Table.Thead>

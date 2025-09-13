@@ -8,6 +8,7 @@ import {
   Group,
   Checkbox,
   ActionIcon,
+  Badge
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
@@ -33,6 +34,7 @@ export default function HomePage() {
           opened={modalOpened}
           onClose={() => setModalOpened(false)}
           onAdd={addTask}
+          setLocal={[]}
         />
         {/* แสดง Task Cards */}
         <Stack w="100%">
@@ -41,6 +43,12 @@ export default function HomePage() {
               <Group justify="space-between" align="flex-start">
                 <Stack>
                   {/* เพิ่ม assignees ตรงนี้*/}
+                  <Group>
+                  {task.assignee?.map((as) => (
+                    <Badge  variant="light" color="blue"> {as} </Badge>
+                  ))}
+                  </Group>
+
                   <Text
                     fw={600}
                     td={task.isDone ? "line-through" : "none"}
@@ -54,6 +62,7 @@ export default function HomePage() {
                   </Text>
                   {task.dueDate ? (
                     <Text size="xs" c="gray">
+                                    {/* doneAt: task.isDone ? null : new Date().toLocaleDateString(), */}
                       Due: {dayjs(task.dueDate).format("ddd MMM DD YYYY")}
                     </Text>
                   ) : (
@@ -63,7 +72,7 @@ export default function HomePage() {
                   )}
                   {task.doneAt && (
                     <Text size="xs" c="chanadda">
-                      Done at: {dayjs(task.doneAt).format("ddd MMM DD YYYY")}
+                      Done at: {dayjs(task.doneAt).format("ddd MMM DD YYYY ")}
                     </Text>
                   )}
                 </Stack>

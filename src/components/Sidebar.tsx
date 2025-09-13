@@ -33,7 +33,7 @@ export default function Sidebar() {
             <Avatar size="md" radius="xl" src="/charliebrown.jpg" />
           </Indicator>
           <Text component={RouterNavLink} to="/">
-            User : Chanadda : Admin
+            User : Krittin Sangin: Student
           </Text>
         </Group>
       </Box>

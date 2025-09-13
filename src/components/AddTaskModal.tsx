@@ -11,12 +11,14 @@ import {
   Text,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { useTaskFormStore } from "../store/TaskFormStore";
+import { useTaskFormStore } from "../store/TaskFromStore1";
+import type { TaskProps } from "../libs/Task";
 
 interface AddTaskModalProps {
   opened: boolean;
   onClose: () => void;
-  onAdd: (title: string, description: string, dueDate: string | null) => void;
+  onAdd: (title: string, description: string, dueDate: string | null ,assignee: string[] | null) => void;
+  setLocal: TaskProps[];
 }
 const usersData: Record<string, { image: string; email: string }> = {
   "Emily Johnson": {
@@ -55,17 +57,32 @@ export default function AddTaskModal({
     title,
     description,
     dueDate,
+    assignee,
+    setAssignee,
     setTitle,
     setDescription,
     setDueDate,
     resetForm,
   } = useTaskFormStore();
   const handleAdd = () => {
-    if (!title.trim() || !description.trim() || !dueDate) return;
-    onAdd(title, description, dueDate);
+    if (!title.trim() || !description.trim() || !dueDate || !assignee?.at(0)?.trim()) return;
+    onAdd(title, description, dueDate, assignee);
     onClose();
     resetForm();
   };
+
+  const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (
+  <Group gap="sm">
+    <Avatar src={usersData[option.value].image} size={36} radius="xl" />
+    <div>
+      <Text size="sm">{option.value}</Text>
+      <Text size="xs" opacity={0.5}>
+        {usersData[option.value].email}
+      </Text>
+    </div>
+  </Group>
+);
+
 
   return (
     <Modal opened={opened} onClose={onClose} title="Add Task">
@@ -94,6 +111,18 @@ export default function AddTaskModal({
           error={!dueDate?.trim() ? "Due Date is required" : false}
         />
         {/* เพิ่ม MultiSelect ตรงนี้*/}
+        <MultiSelect
+        data={['Emily Johnson', 'Ava Rodriguez', 'Olivia Chen', 'Ethan Barnes', 'Mason Taylor']}
+      renderOption={renderMultiSelectOption}
+      maxDropdownHeight={300}
+      label="Assignees"
+      placeholder="Search for Assignees"
+      hidePickedOptions
+      searchable
+      error={!assignee?.at(0)?  "Assignees is required" : false}
+      onChange={(e) => setAssignee(e)}
+      value={assignee ?? undefined}
+        > </MultiSelect>
         <Button onClick={handleAdd}>Save</Button>
       </Stack>
     </Modal>
