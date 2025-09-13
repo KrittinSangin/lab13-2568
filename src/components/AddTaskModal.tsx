@@ -12,13 +12,10 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useTaskFormStore } from "../store/TaskFromStore1";
-import type { TaskProps } from "../libs/Task";
-
 interface AddTaskModalProps {
   opened: boolean;
   onClose: () => void;
   onAdd: (title: string, description: string, dueDate: string | null ,assignee: string[] | null) => void;
-  setLocal: TaskProps[];
 }
 const usersData: Record<string, { image: string; email: string }> = {
   "Emily Johnson": {

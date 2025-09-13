@@ -34,7 +34,6 @@ export default function HomePage() {
           opened={modalOpened}
           onClose={() => setModalOpened(false)}
           onAdd={addTask}
-          setLocal={[]}
         />
         {/* แสดง Task Cards */}
         <Stack w="100%">

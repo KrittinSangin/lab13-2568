@@ -78,7 +78,6 @@ export default function TodoTablePage() {
           onAdd={
           addTask
           }
-          setLocal = {tasks}
         />
 
         <Table striped highlightOnHover horizontalSpacing="xl">
